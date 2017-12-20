@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-pip install pyqt5 jinja2
+pip3 install -r requirements.txt

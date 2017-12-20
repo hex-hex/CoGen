@@ -29,7 +29,7 @@ class DeclareType(Enum):
 
 class BaseDeclaration:
     parent = None
-    name = ''
+    name = ''  # CamelCase
     params = {}
 
 
@@ -118,8 +118,8 @@ class EntityFile:
 
         class_pattern = re.compile('class[\s|:|{]')
         function_pattern = re.compile('fun\s+')
-        mutable_pattern = re.compile('var\s+')
-        immutable_pattern = re.compile('val\s+')
+        mutable_pattern = re.compile('[\w+\s+]*var\s+')
+        immutable_pattern = re.compile('[\w+\s+]*val\s+')
         if class_pattern.match(line):
             return DeclareType.CLASS
         if package_pattern.match(line):
@@ -146,13 +146,22 @@ class EntityFile:
                 else:
                     if tup[0].value > 0:  # 是一个真正的东西
                         curr_entity.entity_type = tup[0]
-                        curr_entity.name = tup[1]
-                    self.entity_declaration.member_list.append(curr_entity)
-                    curr_entity = EntityDeclaration()
+                        curr_entity.name, curr_entity.return_type = EntityFile.parse_name_type(tup)
+                        self.entity_declaration.member_list.append(curr_entity)
+                        curr_entity = EntityDeclaration()
             else:
                 if tup[0] == DeclareType.ANNOTATION:
                     self.entity_declaration.annotations.append(tup[1])
                 if tup[0] == DeclareType.CLASS:
-                    class_name = re.findall(re.compile('{}\s*\w+[:|\s*|\?].+'.format(DeclareType.get_keyword(tup[0]))), tup[1])
-                    self.entity_declaration.name = class_name
+                    self.entity_declaration.entity_type = DeclareType.CLASS
+                    self.entity_declaration.name, self.entity_declaration.return_type = EntityFile.parse_name_type(tup)
+
+    @staticmethod
+    def parse_name_type(line_tuple):
+        entity_name = re.findall(re.compile('{}\s*\w+[:|\s*|\?].+'.format(DeclareType.get_keyword(line_tuple[0]))), line_tuple[1])[0]
+        entity_name = entity_name.strip(DeclareType.get_keyword(line_tuple[0])).strip().split('=')[0].split(':')[0].split('{')[0].split(' ')[0]
+        entity_name = entity_name[0].lower() + entity_name[1:]
+        entity_type = line_tuple[1][line_tuple[1].find(':') + 1:].strip().split('{')[0].split('(')[0].split('=')[0].split(' ')[0]
+        return entity_name, entity_type
+
 

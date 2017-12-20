@@ -6,24 +6,24 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Location} from '@angular/common';
 
 @Component({
-selector: 'sa-${entity}-form',
-templateUrl: './${entity}-form.component.html',
+selector: 'sa-{{class_model.name}}-form',
+templateUrl: './{{class_model.name}}-form.component.html',
 })
 @AutoUnsubscribe()
-export class ${entity}FormComponent extends BaseComponent implements OnInit {
+export class {{class_model.name}}FormComponent extends BaseComponent implements OnInit {
 public loading: boolean;
 public myForm: FormGroup;
 public id: number;
 public isEdit = false;
 public subscription: Subscription;
-public ${entity}: ${entity}Model = new ${entity}Model();
+public {{class_model.name}}: {{class_model.name}}Model = new {{class_model.name}}Model();
 
 constructor(public formBuiler: FormBuilder,
 public ref: ChangeDetectorRef,
 public router: Router,
 public location: Location,
 public myNotifyService: MyNotifyService,
-public ${entity}Service: ${entity}Service,
+public {{class_model.name}}Service: {{class_model.name}}Service,
 public activedRoute: ActivatedRoute) {
 super();
 }
@@ -36,9 +36,9 @@ ngOnInit() {
 
 initFormControl() {
     this.myForm = this.formBuiler.group({
-    <#list fields as f>
-    ${f.name}: ['', [Validators.required]],
-    </#list>
+        {% for member in class_model.member_list %}
+        {{member.name}}: ['', [Validators.required]],
+        {% endfor %}
     });
 }
 
@@ -66,10 +66,10 @@ this.subscription = this.activedRoute
 
 getItem() {
 this.loading = true;
-this.${entity}Service.get(this.id).subscribe((resp: any) => {
+this.{{class_model.name}}Service.get(this.id).subscribe((resp: any) => {
 this.loading = false;
 console.log(resp);
-this.${entity} = resp;
+this.{{class_model.name}} = resp;
 }, err => {
 this.loading = false;
 });
@@ -85,10 +85,10 @@ goBack() {
 this.location.back();
 }
 
-onSubmit({value, valid}: { value: ${entity}Model, valid: boolean }) {
+onSubmit({value, valid}: { value: {{class_model.name|capitalize}}, valid: boolean }) {
 
 if (!this.isEdit) {
-this.${entity}Service.add(value).subscribe((resp: any) => {
+this.{{class_model.name}}Service.add(value).subscribe((resp: any) => {
 console.log(resp);
 this.goBack();
 }, err => {
@@ -96,9 +96,9 @@ console.log(err);
 this.myNotifyService.notifyFail(err.error.error);
 })
 } else {
-this.${entity}Service.update(this.${entity}.id, value).subscribe((resp: any) => {
+this.{{class_model.name}}Service.update(this.{{class_model.name}}.id, value).subscribe((resp: any) => {
 console.log(resp);
-this.myNotifyService.notifySuccess('The ${entity} is successfully updated.');
+this.myNotifyService.notifySuccess('The {{class_model.name}} is successfully updated.');
 this.goBack();
 }, err => {
 console.log(err);

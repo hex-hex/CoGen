@@ -33,7 +33,7 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 
-                        <h2>${entity} Form</h2>
+                        <h2>{{class_model.name | capitalize}} Form</h2>
 
                     </header>
                     <div>
@@ -45,20 +45,20 @@
 
                                 <fieldset>
                                     <div class="row">
-                                    <#list fields as f>
+                                    {% for member in class_model.member_list %}
                                         <section class="col col-6">
                                             <label class="input">
-                                            ${f.name}<span style="color: red">*</span>
+                                            {{member.name}}<span style="color: red">*</span>
                                                 <input type="text"
-                                                       formControlName="${f.name}"
-                                                       [(ngModel)]="${entity}.${f.name}"
-                                                       name="${f.name}"
+                                                       formControlName="{{member.name}}"
+                                                       [(ngModel)]="{{class_model.name}}.{{member.name}}"
+                                                       name="{{member.name}}"
                                                        placeholder="">
                                                 <validation-error
-                                                        [control]="myForm.get('${f.name}')"></validation-error>
+                                                        [control]="myForm.get('{{member.name}}')"></validation-error>
                                             </label>
                                         </section>
-                                    </#list>
+                                    {% endfor %}
                                     </div>
 
                                 </fieldset>
