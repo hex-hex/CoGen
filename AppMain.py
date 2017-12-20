@@ -8,6 +8,10 @@ class EntityModel:
     name = ''
     member_type = {}
 
+    def __init__(self, model_name):
+        self.name = model_name
+
+
 class MainApp(QMainWindow):
     def __init__(self, parent=None):
         super(MainApp, self).__init__(parent)
