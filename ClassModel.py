@@ -15,14 +15,14 @@ class DeclareType(Enum):
     COMPANION = 6  # todo
 
     @staticmethod
-    def get_keyword(self, declare_type):
+    def get_keyword(declare_type):
         key_map = {
-            self.IMMUTABLE: 'val',
-            self.MUTABLE: 'var',
-            self.FUNCTION: 'fun',
-            self.CLASS: 'class',
-            self.COMPANION: 'companion',
-            self.CONST: 'const',
+            DeclareType.IMMUTABLE: 'val',
+            DeclareType.MUTABLE: 'var',
+            DeclareType.FUNCTION: 'fun',
+            DeclareType.CLASS: 'class',
+            DeclareType.COMPANION: 'companion',
+            DeclareType.CONST: 'const',
         }
         return key_map[declare_type]
 
@@ -50,14 +50,13 @@ class EntityDeclaration(BaseDeclaration):
 
 
 class EntityFile:
-    path = ''
-    lines = []
-    package_name = ''
-    import_list = []
-    entity_declaration = None
 
     def __init__(self, file_path):
         self.path = file_path
+        self.lines = []
+        self.package_name = ''
+        self.import_list = []
+        self.entity_declaration = EntityDeclaration()
 
         comment_line_pattern = re.compile('^\/\/.*')
         comment_begin_pattern = re.compile(r'^\s*\/\*.*')
@@ -118,9 +117,9 @@ class EntityFile:
         annotation_begin_pattern = re.compile('^@.*')
 
         class_pattern = re.compile('class[\s|:|{]')
-        function_pattern = re.compile('^\w*\s*fun')
-        mutable_pattern = re.compile('^\w*\s*var')
-        immutable_pattern = re.compile('^\w*\s*val')
+        function_pattern = re.compile('fun\s+')
+        mutable_pattern = re.compile('var\s+')
+        immutable_pattern = re.compile('val\s+')
         if class_pattern.match(line):
             return DeclareType.CLASS
         if package_pattern.match(line):
@@ -138,7 +137,7 @@ class EntityFile:
         return DeclareType.UNKNOWN
 
     def parse(self):
-        self.entity_declaration = EntityDeclaration()
+        self.entity_declaration.__init__()  
         curr_entity = EntityDeclaration()
         for tup in self.lines:
             if len(self.entity_declaration.name) > 1:
@@ -147,12 +146,13 @@ class EntityFile:
                 else:
                     if tup[0].value > 0:  # 是一个真正的东西
                         curr_entity.entity_type = tup[0]
-                        curr_entity.name = tup[1].split(' ')
+                        curr_entity.name = tup[1]
                     self.entity_declaration.member_list.append(curr_entity)
                     curr_entity = EntityDeclaration()
             else:
                 if tup[0] == DeclareType.ANNOTATION:
                     self.entity_declaration.annotations.append(tup[1])
                 if tup[0] == DeclareType.CLASS:
-                    self.entity_declaration.name = tup[1].split(' ')
+                    class_name = re.findall(re.compile('{}\s*\w+[:|\s*|\?].+'.format(DeclareType.get_keyword(tup[0]))), tup[1])
+                    self.entity_declaration.name = class_name
 
