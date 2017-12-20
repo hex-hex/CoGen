@@ -10,7 +10,7 @@
                 <sa-widget [editbutton]="false" color="greenLight">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>${entity} Table</h2>
+                        <h2>{{class_model.name}} Table</h2>
                         <!--<h2>{{selectedRole !== undefined ? selectedRole.name: ''}}</h2>-->
                     </header>
                     <div>
@@ -18,7 +18,7 @@
                             <div class=""
                                  style="padding: 6px 7px 6px !important; border-bottom: 1px solid #ccc; background: #fafafa; margin-bottom: 0px;">
                                 <a class="btn btn-default" (click)="reset()"><i class="fa fa-filter"></i>Reset Filter</a>
-                                <a class="btn btn-default" routerLink="/pages/${entity}-add"><i
+                                <a class="btn btn-default" routerLink="/pages/{{class_model.name}}-add"><i
                                         class="fa fa-plus"></i>Add</a>
                             </div>
 
@@ -29,12 +29,12 @@
                                     <thead>
                                     <tr [formGroup]="searchForm" class="searchForm">
                                         <th></th>
-                                    <#list fields as f>
+                                        {% for member in class_model.member_list %}
                                         <th class="hasinput" [ngStyle]="{width:'8%'}">
-                                            <input formControlName="${f.name}" type="text" class="form-control"
-                                                   placeholder="${f.name}"/>
+                                            <input formControlName="{{member.name}}" type="text" class="form-control"
+                                                   placeholder="{{member.name}}"/>
                                         </th>
-                                    </#list>
+                                    {% endfor %}
                                         <th></th>
                                     </tr>
 
@@ -56,9 +56,9 @@
                                                 <i></i>
                                             </label>
                                         </th>
-                                    <#list fields as f>
-                                    <th>${f.name}</th>
-                                    </#list>
+                                        {% for member in class_model.member_list %}
+                                    <th>{{member.name}}</th>
+                                        {% endfor %}
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -78,10 +78,10 @@
                                                 <i></i>
                                             </label>
                                         </td>
-                                    <#list fields as f>
-                                        <td>{{item.${f.name}}}</td>
-                                    </#list>
-                                        <td> <a routerLink="/pages/${entity}s/edit/{{item.id}}"><i
+                                        {% for member in class_model.member_list %}
+                                        <td>{{ '{{' }}item.{{member.name}} {{ '}}' }}}</td>
+                                    {% endfor %}
+                                        <td> <a routerLink="/pages/{{class_model.name}}s/edit/{{item.id}}"><i
                                                 class="fa fa-edit"></i></a></td>
 
                                     </tr>
