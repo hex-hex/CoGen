@@ -2,14 +2,8 @@ import re
 import os
 import sys
 import jinja2
+from ClassModel import *
 from PyQt5.QtWidgets import *
-
-class EntityModel:
-    name = ''
-    member_type = {}
-
-    def __init__(self, model_name):
-        self.name = model_name
 
 
 class MainApp(QMainWindow):
@@ -58,23 +52,8 @@ class MainApp(QMainWindow):
 
     def open_file(self):
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open a xls file', '', 'Kotlin Files (*.kt)')
-        file = self.load_file_cotentfile(file_name)
-        self.class_name = self.get_class_name(file)
-
-    def load_file_cotentfile(self, file_name):
-        with open(file_name, 'r') as file_open:
-            file_cotent = file_open.readlines()
-        return file_cotent
-
-    @staticmethod
-    def get_class_name(file_content):
-        class_name_pattern = re.compile('\s*class\s+[a-zA-z]+\s*:?')
-        class_name = []
-        for line in file_content:
-            match = class_name_pattern.match(line)
-            if match:
-                class_name.append(match.group().strip('class').strip(':').strip())
-        return class_name
+        file = EntityFile(file_name)
+        file.parse()
 
 
 if __name__ == "__main__":
