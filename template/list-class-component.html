@@ -11,7 +11,9 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>{{class_model.name}} Table</h2>
+                        {#
                         <!--<h2>{{selectedRole !== undefined ? selectedRole.name: ''}}</h2>-->
+                        #}
                     </header>
                     <div>
                         <div class="widget-body no-padding">
@@ -38,12 +40,14 @@
                                         <th></th>
                                     </tr>
 
+                                    {#
                                     <!--<tr>-->
                                     <!--<th *ngFor="let c of sortOprions.sortColumns" [ngClass]="getSortClass(c)"-->
                                     <!--(click)="changeSort(c)">{{c.columnDisplay}}-->
                                     <!--</th>-->
                                     <!--<th>Action</th>-->
                                     <!--</tr>-->
+                                    #}
 
                                     <tr>
                                         <th>
@@ -81,9 +85,8 @@
                                         {% for member in class_model.member_list %}
                                         <td>{{ '{{' }}item.{{member.name}} {{ '}}' }}}</td>
                                     {% endfor %}
-                                        <td> <a routerLink="/pages/{{class_model.name}}s/edit/{{item.id}}"><i
+                                        <td> <a routerLink="/pages/{{class_model.name}}s/edit/{{ '{{' }}item.id{{ '}}' }}"><i
                                                 class="fa fa-edit"></i></a></td>
-
                                     </tr>
                                     </tbody>
                                 </table>
@@ -97,10 +100,10 @@
                                                             (ngModelChange)="onPageSizeChange($event)"
                                                             [(ngModel)]="paging.pageSize">
                                                         <option [ngValue]="i"
-                                                                *ngFor="let i of [12,24,36,100]">{{i}}</option>
+                                                                *ngFor="let i of [12,24,36,100]">{{'{{'}}i{{'}}'}}</option>
                                                     </select>
                                                   </span> records/page, <span
-                                                    class="theme-color">{{paging.totalSize}}</span> records in total
+                                                    class="theme-color">{{'{{'}}paging.totalSize{{ '}}' }}</span> records in total
                                               </span>
                                         </div>
                                     </div>
