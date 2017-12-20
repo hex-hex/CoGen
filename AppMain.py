@@ -31,7 +31,7 @@ class MainApp(QMainWindow):
     def export_file(self):
         if self.class_name is None:
             return
-        folder = QFileDialog.getExistingDirectory(self,'Select Destination Folder')
+        folder = QFileDialog.getExistingDirectory(self, 'Select Destination Folder')
         parent_folder = str(folder) + '/' + self.class_name[0] + 's'
         list_folder = parent_folder + '/' + self.class_name[0] + '-list'
         form_folder = parent_folder + '/' + self.class_name[0] + '-form'

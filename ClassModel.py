@@ -1,4 +1,15 @@
 import re
+from enum import Enum
+
+
+class DeclareType(Enum):
+    UNKNOWN = 0
+    CLASS = 1
+    VARIABLE = 2
+    FUNCTION = 3
+    ANNOTATION = 4
+    PACKAGE = 5
+    IMPORT = 6
 
 
 class BaseDeclaration:
@@ -15,7 +26,7 @@ class Annotation(BaseDeclaration):
         self.name = str_annotation
 
 
-class ClassEntity(BaseDeclaration):
+class EntityDeclaration(BaseDeclaration):
     entity_type = ''
     return_type = ''
     annotations = []
@@ -34,17 +45,19 @@ class EntityFile:
         self.path = file_path
 
         comment_line_pattern = re.compile('^\\\\.*')
-        # comment_begin_pattern = re.compile(r'^\s*\\\*.*')
-        # comment_end_pattern = re.compile(r'^\s*\*\\.*')
-        # annotation_begin_pattern = re.compile('^\s*@.*')
+        comment_begin_pattern = re.compile(r'^\s*\\\*.*')
+        comment_end_pattern = re.compile(r'^\s*\*\\.*')
         class_pattern = re.compile('class[\s|:|{]')
         class_with_curl = re.compile('class.+{')
         begin_with_dot = re.compile(r'^\s*\.')
         end_with_dot = re.compile(r'.+\.$')
 
         with open(self.path, 'r') as file_open:
-            self.lines = file_open.readlines()
-            self.lines = list(map(lambda x: x.strip('\n').strip(), self.lines))
+            try:
+                self.lines = file_open.readlines()
+                self.lines = list(map(lambda x: x.strip('\n').strip(), self.lines))
+            except Exception as e:
+                print(str(e))
 
         for idx in range(len(self.lines)):
             if self.lines[idx].count('(') > self.lines[idx].count(')'):
@@ -66,21 +79,44 @@ class EntityFile:
                 self.lines[idx + 1] = self.lines[idx] + self.lines[idx + 1]
                 self.lines[idx] = ''
 
-        self.lines = map(lambda x:
-                         (self.check_line(x), x)
-                         , list(filter(lambda x:
-                                       not comment_line_pattern.match(x) and len(x) > 0,
-                                       self.lines)
-                                )
-                         )
+            if comment_end_pattern.match(self.lines[idx]):
+                continue
+            elif comment_begin_pattern.match(self.lines[idx]):
+                self.lines[idx + 1] = self.lines[idx] + self.lines[idx + 1]
+                self.lines[idx] = ''
+
+        self.lines = list(
+            map(lambda x:
+                (self.check_line(x), x)
+                , list(filter(lambda x:
+                              not comment_line_pattern.match(x) and len(x) > 0,
+                              self.lines)
+                       )
+                )
+        )
         print(self.lines)
 
     @staticmethod
     def check_line(line):
         class_pattern = re.compile('class[\s|:|{]')
-        package_pattern = re.compile('^\s*package\s+')
-        import_pattern = re.compile('^\s*import\s+')
-        pass
+        package_pattern = re.compile('^package\s+')
+        import_pattern = re.compile('^import\s+')
+        annotation_begin_pattern = re.compile('^@.*')
+        function_pattern = re.compile('^\w*\s*fun')
+        variable_pattern = re.compile('^\w*\s*var')
+        if class_pattern.match(line):
+            return DeclareType.CLASS
+        if package_pattern.match(line):
+            return DeclareType.PACKAGE
+        if import_pattern.match(line):
+            return DeclareType.IMPORT
+        if annotation_begin_pattern.match(line):
+            return DeclareType.ANNOTATION
+        if function_pattern.match(line):
+            return DeclareType.FUNCTION
+        if variable_pattern.match(line):
+            return DeclareType.VARIABLE
+        return DeclareType.UNKNOWN
 
     def parse(self):
         pass
