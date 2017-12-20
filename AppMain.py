@@ -54,6 +54,7 @@ class MainApp(QMainWindow):
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open a xls file', '', 'Kotlin Files (*.kt)')
         file = EntityFile(file_name)
         file.parse()
+        print(file)
 
 
 if __name__ == "__main__":
