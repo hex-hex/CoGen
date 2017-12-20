@@ -4,6 +4,9 @@ import sys
 import jinja2
 from PyQt5.QtWidgets import *
 
+class EntityModel:
+    name = ''
+    member_type = {}
 
 class MainApp(QMainWindow):
     def __init__(self, parent=None):
@@ -12,12 +15,12 @@ class MainApp(QMainWindow):
         action_open = QAction('&Open File', self)
         action_open.setStatusTip('Open a kotlin file')
         action_open.setShortcut('Ctrl+O')
-        action_open.triggered.connect(self.openFile)
+        action_open.triggered.connect(self.open_file)
 
         action_export = QAction('&Export File', self)
         action_export.setStatusTip('Export file')
         action_export.setShortcut('Ctrl+E')
-        action_export.triggered.connect(self.exportFile)
+        action_export.triggered.connect(self.export_file)
 
         file_menu = self.menuBar().addMenu('&File')
         file_menu.addAction(action_open)
@@ -27,7 +30,7 @@ class MainApp(QMainWindow):
         self.statusBar().showMessage('Ready to load file.')
         self.show()
 
-    def exportFile(self):
+    def export_file(self):
         if self.class_name is None:
             return
         folder = QFileDialog.getExistingDirectory(self,'Select Destination Folder')
@@ -49,7 +52,7 @@ class MainApp(QMainWindow):
             form_component_file = open(form_folder + '/' + self.class_name[0] + '-form.component.ts', 'w+')
             form_component_file.close()
 
-    def openFile(self):
+    def open_file(self):
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open a xls file', '', 'Kotlin Files (*.kt)')
         file = self.load_file_cotentfile(file_name)
         self.class_name = self.get_class_name(file)
