@@ -29,31 +29,31 @@ super();
 }
 
 ngOnInit() {
-this.getRouteParemeter();
-this.getQueryParams();
-this.initFormControl();
+    this.getRouteParemeter();
+    this.getQueryParams();
+    this.initFormControl();
 }
 
 initFormControl() {
-this.myForm = this.formBuiler.group({
-<#list fields as f>
-${f.name}: ['', [Validators.required]],
-</#list>
-});
+    this.myForm = this.formBuiler.group({
+    <#list fields as f>
+    ${f.name}: ['', [Validators.required]],
+    </#list>
+    });
 }
 
 getRouteParemeter() {
-this.subscription = this.activedRoute
-.params
-.subscribe(params => {
-console.log(params);
-this.id = params['id'];
-if (this.id && this.id > 0) {
-this.isEdit = true;
-this.getItem();
-} else {
-this.isEdit = false;
-}
+    this.subscription = this.activedRoute
+    .params
+    .subscribe(params => {
+    console.log(params);
+    this.id = params['id'];
+    if (this.id && this.id > 0) {
+    this.isEdit = true;
+    this.getItem();
+    } else {
+    this.isEdit = false;
+    }
 });
 }
 
