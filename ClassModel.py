@@ -32,8 +32,6 @@ class EntityFile:
 
     def __init__(self, file_path):
         self.path = file_path
-        package_pattern = re.compile('^\s*package\s+')
-        import_pattern = re.compile('^\s*import\s+')
 
         comment_line_pattern = re.compile('^\\\\.*')
         # comment_begin_pattern = re.compile(r'^\s*\\\*.*')
@@ -68,10 +66,21 @@ class EntityFile:
                 self.lines[idx + 1] = self.lines[idx] + self.lines[idx + 1]
                 self.lines[idx] = ''
 
-        self.lines = list(filter(lambda x:
-                                 not comment_line_pattern.match(x) and len(x) > 0,
-                                 self.lines))
+        self.lines = map(lambda x:
+                         (self.check_line(x), x)
+                         , list(filter(lambda x:
+                                       not comment_line_pattern.match(x) and len(x) > 0,
+                                       self.lines)
+                                )
+                         )
         print(self.lines)
+
+    @staticmethod
+    def check_line(line):
+        class_pattern = re.compile('class[\s|:|{]')
+        package_pattern = re.compile('^\s*package\s+')
+        import_pattern = re.compile('^\s*import\s+')
+        pass
 
     def parse(self):
         pass
@@ -92,6 +101,3 @@ class EntityFile:
         #         continue
         #     elif variable_name_pattern.match(line):
         #         pass
-
-
-
