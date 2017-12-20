@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 @Component({
-selector: 'sa-${entity}-list',
-templateUrl: './${entity}-list.component.html',
+selector: 'sa-{{class_model.name}}-list',
+templateUrl: './{{class_model.name}}-list.component.html',
 
 })
-export class ${entity}ListComponent extends BaseComponent implements OnInit {
+export class {{class_model.name}}ListComponent extends BaseComponent implements OnInit {
 public searchForm: FormGroup;
 public searchCondition: string;
 public loading: boolean;
 
 constructor(private formBuilder: FormBuilder,
-private ${entity}Service: ${entity}Service,
+private {{class_model.name}}Service: {{class_model.name}}Service,
 private helperService: HelperService) {
 super();
 }
@@ -24,7 +24,7 @@ this.debounceSearchForm();
 
 refresh() {
 this.loading = true;
-this.${entity}Service.getAllByPaging(this.searchCondition, this.paging).subscribe((resp: any) => {
+this.{{class_model.name}}Service.getAllByPaging(this.searchCondition, this.paging).subscribe((resp: any) => {
 console.log(resp);
 this.listElements = resp.content;
 this.paging.totalSize = resp.totalElements;
@@ -39,9 +39,9 @@ this.loading = false;
 */
 buildSearchFrom() {
 this.searchForm = this.formBuilder.group({
-<#list fields as f>
-${f.name}: [''],
-</#list>
+        {% for member in class_model.member_list %}
+        {{member.name}}: [''],
+        {% endfor %}
 });
 }
 

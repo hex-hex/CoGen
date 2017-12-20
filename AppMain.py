@@ -51,8 +51,10 @@ class MainApp(QMainWindow):
                 .render({'class_model': self.file.entity_declaration})
             list_html_file.write(list_html_output)
 
-        list_component_file = open(list_folder + '/' + self.file.entity_declaration.name + '-list.component.ts', 'w+')
-        list_component_file.close()
+        with open(list_folder + '/' + self.file.entity_declaration.name + '-list.component.ts', 'w+') as list_ts_file:
+            list_ts_output = self.jinja_env.get_template('list-class-component.ts') \
+                .render({'class_model': self.file.entity_declaration})
+            list_ts_file.write(list_ts_output)
 
         if not os.path.exists(form_folder):
             os.makedirs(form_folder)
@@ -61,10 +63,10 @@ class MainApp(QMainWindow):
                 .render({'class_model': self.file.entity_declaration})
             form_html_file.write(form_html_output)
 
-        with open(form_folder + '/' + self.file.entity_declaration.name + '-form.component.ts', 'w+') as form_component_file:
-            form_component_output = self.jinja_env.get_template('form-class-component.ts')\
+        with open(form_folder + '/' + self.file.entity_declaration.name + '-form.component.ts', 'w+') as form_ts_file:
+            form_ts_output = self.jinja_env.get_template('form-class-component.ts')\
                 .render({'class_model': self.file.entity_declaration})
-            form_component_file.write(form_component_output)
+            form_ts_file.write(form_ts_output)
 
     def open_file(self):
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open a xls file', '', 'Kotlin Files (*.kt)')
