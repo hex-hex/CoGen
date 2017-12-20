@@ -41,8 +41,18 @@ class MainApp(QMainWindow):
         if not os.path.exists(parent_folder):
             os.makedirs(parent_folder)
 
-        module_file = open(parent_folder + '/' + self.file.entity_declaration.name + 's.module.ts', 'w+')
-        module_file.close()
+        with open(parent_folder + '/' + self.file.entity_declaration.name + '.service.ts', 'w+') as service_file:
+            service_output = self.jinja_env.get_template('class-service.ts')\
+                .render({'class_model': self.file.entity_declaration})
+            service_file.write(service_output)
+
+        with open(parent_folder + '/' + self.file.entity_declaration.name + '.model.ts', 'w+') as model_file:
+            model_output = self.jinja_env.get_template('class-model.ts')\
+                .render({'class_model': self.file.entity_declaration})
+            model_file.write(model_output)
+
+        with open(parent_folder + '/' + self.file.entity_declaration.name + 's.module.ts', 'w+') as module_file:
+            pass
 
         if not os.path.exists(list_folder):
             os.makedirs(list_folder)
