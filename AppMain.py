@@ -66,7 +66,7 @@ class MainApp(QMainWindow):
         for line in file_content:
             match = class_name_pattern.match(line)
             if match:
-                class_name.append(match.group().strip('class').strip(':'))
+                class_name.append(match.group().strip('class').strip(':').strip())
         return class_name
 
 
