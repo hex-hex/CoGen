@@ -29,10 +29,12 @@ class MainApp(QMainWindow):
         btn_open = QPushButton('Open Kotlin File', self)
         btn_open.resize(200, 40)
         btn_open.move(20, 40)
+        btn_open.clicked.connect(self.open_file)
 
-        btn_open = QPushButton('Select Export Folder', self)
-        btn_open.resize(200, 40)
-        btn_open.move(20, 100)
+        btn_export = QPushButton('Select Export Folder', self)
+        btn_export.resize(200, 40)
+        btn_export.move(20, 100)
+        btn_export.clicked.connect(self.export_file)
 
         self.setWindowTitle('CoGen v0.1')
         self.setFixedSize(240, 600)
