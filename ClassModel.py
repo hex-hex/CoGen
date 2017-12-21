@@ -158,7 +158,7 @@ class EntityFile:
 
     @staticmethod
     def parse_name_type(line_tuple):
-        entity_name = re.findall(re.compile('{}\s*\w+[:|\s*|\?].+'.format(DeclareType.get_keyword(line_tuple[0]))), line_tuple[1])[0]
+        entity_name = re.findall(re.compile('{}\s+\w+'.format(DeclareType.get_keyword(line_tuple[0]))), line_tuple[1])[0]
         entity_name = entity_name.strip(DeclareType.get_keyword(line_tuple[0])).strip().split('=')[0].split(':')[0].split('{')[0].split(' ')[0]
         entity_name = entity_name[0].lower() + entity_name[1:]
         entity_type = line_tuple[1][line_tuple[1].find(':') + 1:].strip().split('{')[0].split('(')[0].split('=')[0].split(' ')[0]

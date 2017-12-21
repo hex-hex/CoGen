@@ -17,16 +17,26 @@ class MainApp(QMainWindow):
         action_open.setShortcut('Ctrl+O')
         action_open.triggered.connect(self.open_file)
 
-        action_export = QAction('&Export File', self)
-        action_export.setStatusTip('Export file')
+        action_export = QAction('&Export Files', self)
+        action_export.setStatusTip('Export files')
         action_export.setShortcut('Ctrl+E')
         action_export.triggered.connect(self.export_file)
 
         file_menu = self.menuBar().addMenu('&File')
         file_menu.addAction(action_open)
         file_menu.addAction(action_export)
+
+        btn_open = QPushButton('Open Kotlin File', self)
+        btn_open.resize(200, 40)
+        btn_open.move(20, 40)
+
+        btn_open = QPushButton('Select Export Folder', self)
+        btn_open.resize(200, 40)
+        btn_open.move(20, 100)
+
         self.setWindowTitle('CoGen v0.1')
-        self.setFixedSize(600, 400)
+        self.setFixedSize(240, 600)
+
         self.statusBar().showMessage('Ready to load file.')
         self.show()
 
@@ -80,11 +90,11 @@ class MainApp(QMainWindow):
 
     def open_file(self):
         file_name, _ = QFileDialog.getOpenFileName(self, 'Open a xls file', '', 'Kotlin Files (*.kt)')
-        if file_name is None:
+        if len(file_name) == 0:
             return
         self.file = EntityFile(file_name)
         self.file.parse()
-        print(self.file)
+        self.statusBar().showMessage('File loaded.')
 
 
 if __name__ == "__main__":
