@@ -83,7 +83,7 @@
                                             </label>
                                         </td>
                                         {% for member in class_model.member_list %}
-                                        <td>{{ '{{' }}item.{{member.name}} {{ '}}' }}}</td>
+                                        <td>{{ '{{' }}item.{{member.name}} {{ '}}' }}</td>
                                     {% endfor %}
                                         <td> <a routerLink="/pages/{{class_model.name}}s/edit/{{ '{{' }}item.id{{ '}}' }}"><i
                                                 class="fa fa-edit"></i></a></td>
