@@ -1,6 +1,8 @@
 import re
 from enum import Enum
 
+from DeclarationName import DeclarationName
+
 
 class DeclareType(Enum):
     PACKAGE = -3
@@ -140,7 +142,7 @@ class EntityFile:
         self.entity_declaration.__init__()  
         curr_entity = EntityDeclaration()
         for tup in self.lines:
-            if len(self.entity_declaration.name) > 1:
+            if len(self.entity_declaration.name) > 0:
                 if tup[0] == DeclareType.ANNOTATION:
                     curr_entity.annotations.append(tup[1])
                 else:
@@ -149,18 +151,22 @@ class EntityFile:
                         curr_entity.name, curr_entity.return_type = EntityFile.parse_name_type(tup)
                         self.entity_declaration.member_list.append(curr_entity)
                         curr_entity = EntityDeclaration()
+            elif tup[0] == DeclareType.IMPORT:
+                self.import_list.append(tup[1])
             else:
                 if tup[0] == DeclareType.ANNOTATION:
                     self.entity_declaration.annotations.append(tup[1])
-                if tup[0] == DeclareType.CLASS:
+                elif tup[0] == DeclareType.CLASS:
                     self.entity_declaration.entity_type = DeclareType.CLASS
                     self.entity_declaration.name, self.entity_declaration.return_type = EntityFile.parse_name_type(tup)
+                elif tup[0] == DeclareType.PACKAGE:
+                    self.package_name = tup[1]
 
     @staticmethod
     def parse_name_type(line_tuple):
         entity_name = re.findall(re.compile('{}\s+\w+'.format(DeclareType.get_keyword(line_tuple[0]))), line_tuple[1])[0]
         entity_name = entity_name.strip(DeclareType.get_keyword(line_tuple[0])).strip().split('=')[0].split(':')[0].split('{')[0].split(' ')[0]
-        entity_name = entity_name[0].lower() + entity_name[1:]
+        entity_name = DeclarationName(entity_name)
         entity_type = line_tuple[1][line_tuple[1].find(':') + 1:].strip().split('{')[0].split('(')[0].split('=')[0].split(' ')[0]
         return entity_name, entity_type
 

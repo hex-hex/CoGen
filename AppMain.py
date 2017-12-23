@@ -3,6 +3,7 @@ import os
 import sys
 import jinja2
 from ClassModel import *
+from DeclarationName import *
 from PyQt5.QtWidgets import *
 
 
