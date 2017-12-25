@@ -10,9 +10,9 @@
                 <sa-widget [editbutton]="false" color="greenLight">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>{{class_model.name}} Table</h2>
+                        <h2>{{class_model.name.get_capitalized_sentence()}} Table</h2>
                         {#
-                        <!--<h2>{{selectedRole !== undefined ? selectedRole.name: ''}}</h2>-->
+                        <!--<h2>{{selectedRole !== undefined ? selectedRole.name.get_camel(): ''}}</h2>-->
                         #}
                     </header>
                     <div>
@@ -20,8 +20,9 @@
                             <div class=""
                                  style="padding: 6px 7px 6px !important; border-bottom: 1px solid #ccc; background: #fafafa; margin-bottom: 0px;">
                                 <a class="btn btn-default" (click)="reset()"><i class="fa fa-filter"></i>Reset Filter</a>
-                                <a class="btn btn-default" routerLink="/pages/{{class_model.name}}-add"><i
-                                        class="fa fa-plus"></i>Add</a>
+                                <a class="btn btn-default" routerLink="/pages/{{class_model.name.get_camel()}}-add">
+                                    <i class="fa fa-plus"></i>Add
+                                </a>
                             </div>
 
                             <div class="table-responsive">
@@ -33,8 +34,8 @@
                                         <th></th>
                                         {% for member in class_model.member_list %}
                                         <th class="hasinput" [ngStyle]="{width:'8%'}">
-                                            <input formControlName="{{member.name}}" type="text" class="form-control"
-                                                   placeholder="{{member.name}}"/>
+                                            <input formControlName="{{member.name.get_camel()}}" type="text" class="form-control"
+                                                   placeholder="{{member.name.get_camel()}}"/>
                                         </th>
                                     {% endfor %}
                                         <th></th>
@@ -61,7 +62,7 @@
                                             </label>
                                         </th>
                                         {% for member in class_model.member_list %}
-                                    <th>{{member.name}}</th>
+                                    <th>{{member.name.get_camel()}}</th>
                                         {% endfor %}
                                         <th>Action</th>
                                     </tr>
@@ -83,9 +84,9 @@
                                             </label>
                                         </td>
                                         {% for member in class_model.member_list %}
-                                        <td>{{ '{{' }}item.{{member.name}} {{ '}}' }}</td>
+                                        <td>{{ '{{' }}item.{{member.name.get_camel()}} {{ '}}' }}</td>
                                     {% endfor %}
-                                        <td> <a routerLink="/pages/{{class_model.name}}s/edit/{{ '{{' }}item.id{{ '}}' }}"><i
+                                        <td> <a routerLink="/pages/{{class_model.name.get_camel()}}s/edit/{{ '{{' }}item.id{{ '}}' }}"><i
                                                 class="fa fa-edit"></i></a></td>
                                     </tr>
                                     </tbody>

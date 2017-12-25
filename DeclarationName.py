@@ -37,11 +37,38 @@ class DeclarationName:
     def get_case(self, case_type):
         if case_type == DeclarationName.CaseType.CamelCase:
             return ''.join([word.capitalize() for word in self.name_list])
-        if case_type == DeclarationName.CaseType.CamelCase:
+        if case_type == DeclarationName.CaseType.camelCase:
             return ''.join([word if idx == 0 else word.capitalize() for idx, word in enumerate(self.name_list)])
         if case_type == DeclarationName.CaseType.kebab_case:
             return '-'.join(self.name_list)
         if case_type == DeclarationName.CaseType.snake_case:
             return '_'.join(self.name_list)
+        if case_type == DeclarationName.CaseType.KEBAB_CASE:
+            return '-'.join([word.upper() for word in self.name_list])
+        if case_type == DeclarationName.CaseType.SNAKE_CASE:
+            return '_'.join([word.upper() for word in self.name_list])
 
+    def get_capitalized_sentence(self):
+        return ' '.join([word.capitalize() for word in self.name_list])
+
+    def get_sentence(self):
+        return ' '.join(self.name_list)
+
+    def get_capitalized_camel(self):
+        return self.get_case(DeclarationName.CaseType.CamelCase)
+
+    def get_camel(self):
+        return self.get_case(DeclarationName.CaseType.camelCase)
+
+    def get_snake(self):
+        return self.get_case(DeclarationName.CaseType.snake_case)
+
+    def get_capitalized_snake(self):
+        return self.get_case(DeclarationName.CaseType.SNAKE_CASE)
+
+    def get_kebab(self):
+        return self.get_case(DeclarationName.CaseType.kebab_case)
+
+    def get_capitalized_kebab(self):
+        return self.get_case(DeclarationName.CaseType.KEBAB_CASE)
 

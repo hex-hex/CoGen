@@ -33,7 +33,7 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 
-                        <h2>{{class_model.name | capitalize}} Form</h2>
+                        <h2>{{class_model.name.get_capitalized_sentence()}} Form</h2>
 
                     </header>
                     <div>
@@ -48,14 +48,14 @@
                                     {% for member in class_model.member_list %}
                                         <section class="col col-6">
                                             <label class="input">
-                                            {{member.name}}<span style="color: red">*</span>
+                                            {{member.name.get_capitalized_sentence()}}<span style="color: red">*</span>
                                                 <input type="text"
-                                                       formControlName="{{member.name}}"
-                                                       [(ngModel)]="{{class_model.name}}.{{member.name}}"
+                                                       formControlName="{{member.name.get_camel()}}"
+                                                       [(ngModel)]="{{class_model.name.get_camel()}}.{{member.name.get_camel()}}"
                                                        name="{{member.name}}"
                                                        placeholder="">
                                                 <validation-error
-                                                        [control]="myForm.get('{{member.name}}')"></validation-error>
+                                                        [control]="myForm.get('{{member.name.get_camel()}}')"></validation-error>
                                             </label>
                                         </section>
                                     {% endfor %}

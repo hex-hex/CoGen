@@ -1,54 +1,6 @@
 import re
-from enum import Enum
-
+from BaseType import EntityDeclaration, DeclareType, Annotation
 from DeclarationName import DeclarationName
-
-
-class DeclareType(Enum):
-    PACKAGE = -3
-    IMPORT = -2
-    UNKNOWN = -1
-    ANNOTATION = 0
-    CLASS = 1
-    FUNCTION = 2
-    IMMUTABLE = 3
-    MUTABLE = 4
-    CONST = 5  # todo
-    COMPANION = 6  # todo
-
-    @staticmethod
-    def get_keyword(declare_type):
-        key_map = {
-            DeclareType.IMMUTABLE: 'val',
-            DeclareType.MUTABLE: 'var',
-            DeclareType.FUNCTION: 'fun',
-            DeclareType.CLASS: 'class',
-            DeclareType.COMPANION: 'companion',
-            DeclareType.CONST: 'const',
-        }
-        return key_map[declare_type]
-
-
-class BaseDeclaration:
-    parent = None
-    name = ''  # CamelCase
-    params = {}
-
-
-class Annotation(BaseDeclaration):
-    def __init__(self):
-        self.name = '@'
-
-    def __init__(self, str_annotation):
-        self.name = str_annotation
-
-
-class EntityDeclaration(BaseDeclaration):
-    def __init__(self):
-        self.annotations = []
-        self.member_list = []
-        self.entity_type = ''
-        self.return_type = ''
 
 
 class EntityFile:
@@ -144,7 +96,7 @@ class EntityFile:
         for tup in self.lines:
             if len(self.entity_declaration.name) > 0:
                 if tup[0] == DeclareType.ANNOTATION:
-                    curr_entity.annotations.append(tup[1])
+                    curr_entity.annotations.append(Annotation(tup[1]))
                 else:
                     if tup[0].value > 0:  # 是一个真正的东西
                         curr_entity.entity_type = tup[0]
@@ -152,7 +104,7 @@ class EntityFile:
                         self.entity_declaration.member_list.append(curr_entity)
                         curr_entity = EntityDeclaration()
             elif tup[0] == DeclareType.IMPORT:
-                self.import_list.append(tup[1])
+                self.import_list.append(Annotation(tup[1]))
             else:
                 if tup[0] == DeclareType.ANNOTATION:
                     self.entity_declaration.annotations.append(tup[1])
