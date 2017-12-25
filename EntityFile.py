@@ -122,4 +122,3 @@ class EntityFile:
         entity_type = line_tuple[1][line_tuple[1].find(':') + 1:].strip().split('{')[0].split('(')[0].split('=')[0].split(' ')[0]
         return entity_name, entity_type
 
-

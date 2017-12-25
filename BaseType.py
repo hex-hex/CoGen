@@ -1,5 +1,4 @@
-import re
-from enum import Enum
+from DeclarationName import *
 
 
 class DeclareType(Enum):
@@ -37,7 +36,7 @@ class Annotation(BaseDeclaration):
 
     def __init__(self, str_annotation):
         self.name = str_annotation.strip('@')
-        self.name= self.name.split('(')[0]
+        self.name = self.name.split('(')[0]
         if '(' in str_annotation:
             self.params = str_annotation.strip('@').strip(self.name).split(',')
 
@@ -48,6 +47,9 @@ class EntityDeclaration(BaseDeclaration):
         self.member_list = []
         self.entity_type = ''
         self.return_type = ''
+
+    def __str__(self):
+        return self.name.get_capitalized_camel()
 
     def typescript_type(self):
         type_map = {

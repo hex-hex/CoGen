@@ -1,9 +1,7 @@
-import re
 import os
 import sys
 import jinja2
 from EntityFile import *
-from DeclarationName import *
 from PyQt5.QtWidgets import *
 
 
@@ -13,6 +11,11 @@ class MainApp(QMainWindow):
         super(MainApp, self).__init__(parent)
         self.file = None
         self.jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('./template/'))
+        win_width = 300
+        win_height = 600
+        self.setWindowTitle('CoGen v0.1')
+        self.setFixedSize(win_width, win_height)
+
         action_open = QAction('&Open File', self)
         action_open.setStatusTip('Open a kotlin file')
         action_open.setShortcut('Ctrl+O')
@@ -28,17 +31,18 @@ class MainApp(QMainWindow):
         file_menu.addAction(action_export)
 
         btn_open = QPushButton('Open Kotlin File', self)
-        btn_open.resize(200, 40)
+        btn_open.resize(win_width - 40, 40)
         btn_open.move(20, 40)
         btn_open.clicked.connect(self.open_file)
 
         btn_export = QPushButton('Select Export Folder', self)
-        btn_export.resize(200, 40)
+        btn_export.resize(win_width - 40, 40)
         btn_export.move(20, 100)
         btn_export.clicked.connect(self.export_file)
 
-        self.setWindowTitle('CoGen v0.1')
-        self.setFixedSize(240, 600)
+        self.tree_view = QTreeWidget(self)
+        self.tree_view.resize(win_width - 40, 400)
+        self.tree_view.move(20, 160)
 
         self.statusBar().showMessage('Ready to load file.')
         self.show()
@@ -115,7 +119,15 @@ class MainApp(QMainWindow):
             return
         self.file = EntityFile(file_name)
         self.file.parse()
+        self.show_class()
         self.statusBar().showMessage('File loaded.')
+
+    def show_class(self):
+        self.tree_view.clear()
+        self.tree_view.setHeaderItem(QTreeWidgetItem(['Class Tree']))
+        root_class = QTreeWidgetItem(self.tree_view, [self.file.entity_declaration.name.get_capitalized_camel()])
+        for item in self.file.entity_declaration.member_list:
+            QTreeWidgetItem(root_class, [item.name.get_capitalized_camel()])
 
 
 if __name__ == "__main__":
