@@ -51,6 +51,7 @@ class EntityDeclaration(BaseDeclaration):
     def __str__(self):
         return self.name.get_capitalized_camel()
 
+    @property
     def typescript_type(self):
         type_map = {
             'Int?': 'Number',

@@ -1,9 +1,9 @@
-package com.cfgglobal.fee.dao
+package {{package_base}}.dao
 
-import com.cfgglobal.fee.domain.Agent
+import {{package_base}}.domain.{{class_model.name.get_capitalized_camel()}}
 import com.cfgglobal.test.dao.base.BaseDao
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AgentDao : BaseDao<Agent, Long> {
+interface {{class_model.name.get_capitalized_camel()}}Dao : BaseDao<{{class_model.name.get_capitalized_camel()}}, Long> {
 }

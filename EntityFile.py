@@ -64,6 +64,10 @@ class EntityFile:
         )
         print(self.lines)
 
+    @property
+    def package_base(self):
+        return '.'.join(self.package_name[:-1])
+
     @staticmethod
     def check_line(line):
         package_pattern = re.compile('^package\s+')

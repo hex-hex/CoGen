@@ -48,7 +48,8 @@ class MainApp(QMainWindow):
         self.show()
 
     def export_ts_files(self, folder_path):
-        ts_parent_folder = str(folder_path) + 'typescripts/' \
+        ts_parent_folder = str(folder_path) + '/' \
+            + self.file.entity_declaration.name.get_capitalized_camel() + '/' \
             + self.file.entity_declaration.name.get_kebab() + 's'
         list_folder = ts_parent_folder + '/' \
             + self.file.entity_declaration.name.get_kebab() + '-list'
@@ -112,16 +113,17 @@ class MainApp(QMainWindow):
             form_ts_file.write(form_ts_output)
 
     def export_kt_files(self, folder_path):
-        ts_parent_folder = str(folder_path) + 'kotlin/' \
-                           + self.file.entity_declaration.name.get_kebab() + 's'
+        ts_parent_folder = str(folder_path) + '/' \
+            + self.file.entity_declaration.name.get_capitalized_camel() + '/kotlin'
         controller_folder = ts_parent_folder + '/controller'
         if not os.path.exists(controller_folder):
             os.makedirs(controller_folder)
         with open(controller_folder + '/'
                   + self.file.entity_declaration.name.get_capitalized_camel()
                   + 'Controller.kt', 'w+') as controller_kt_file:
-            controller_kt_output = self.jinja_env.get_template('\kotlin\controller.kt') \
-                .render({'class_model': self.file.entity_declaration})
+            controller_kt_output = self.jinja_env.get_template('kotlin/controller.kt') \
+                .render({'class_model': self.file.entity_declaration,
+                         'package_base': self.file.package_base})
             controller_kt_file.write(controller_kt_output)
 
         dao_folder = ts_parent_folder + '/dao'
@@ -130,8 +132,9 @@ class MainApp(QMainWindow):
         with open(dao_folder + '/'
                   + self.file.entity_declaration.name.get_capitalized_camel()
                   + 'Dao.kt', 'w+') as dao_kt_file:
-            dao_kt_output = self.jinja_env.get_template('\kotlin\dao.kt') \
-                .render({'class_model': self.file.entity_declaration})
+            dao_kt_output = self.jinja_env.get_template('kotlin/dao.kt') \
+                .render({'class_model': self.file.entity_declaration,
+                         'package_base': self.file.package_base})
             dao_kt_file.write(dao_kt_output)
 
         service_folder = ts_parent_folder + '/service'
@@ -140,8 +143,9 @@ class MainApp(QMainWindow):
         with open(service_folder + '/'
                   + self.file.entity_declaration.name.get_capitalized_camel()
                   + 'Service.kt', 'w+') as service_kt_file:
-            service_kt_output = self.jinja_env.get_template('\kotlin\service.kt') \
-                .render({'class_model': self.file.entity_declaration})
+            service_kt_output = self.jinja_env.get_template('kotlin/service.kt') \
+                .render({'class_model': self.file.entity_declaration,
+                         'package_base': self.file.package_base})
             service_kt_file.write(service_kt_output)
 
     def export_file(self):
