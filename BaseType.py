@@ -37,7 +37,7 @@ class Annotation(BaseDeclaration):
 
     def __init__(self, str_annotation):
         self.name = str_annotation.strip('@')
-        self.name = self.name.split('(')[0]
+        self.name= self.name.split('(')[0]
         if '(' in str_annotation:
             self.params = str_annotation.strip('@').strip(self.name).split(',')
 
@@ -60,4 +60,8 @@ class EntityDeclaration(BaseDeclaration):
             'String': 'String',
             'String?': 'String',
         }
-        return type_map[self.return_type] if type_map[self.return_type] is not None else self.return_type.strip('?')
+        try:
+            result = type_map[self.return_type]
+        except KeyError as ex:
+            result = self.return_type.strip('?')
+        return result
