@@ -47,52 +47,51 @@ class MainApp(QMainWindow):
         self.statusBar().showMessage('Ready to load file.')
         self.show()
 
-    def export_file(self):
-        if self.file is None:
-            return
-        folder = QFileDialog.getExistingDirectory(self, 'Select Destination Folder')
-        parent_folder = str(folder) + '/' \
+    def export_ts_files(self, folder_path):
+        ts_parent_folder = str(folder_path) + 'typescripts/' \
             + self.file.entity_declaration.name.get_kebab() + 's'
-        list_folder = parent_folder + '/' \
+        list_folder = ts_parent_folder + '/' \
             + self.file.entity_declaration.name.get_kebab() + '-list'
-        form_folder = parent_folder + '/' \
+        form_folder = ts_parent_folder + '/' \
             + self.file.entity_declaration.name.get_kebab() + '-form'
 
-        if not os.path.exists(parent_folder):
-            os.makedirs(parent_folder)
+        if not os.path.exists(ts_parent_folder):
+            os.makedirs(ts_parent_folder)
 
-        with open(parent_folder + '/'
+        with open(ts_parent_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '.service.ts', 'w+') as service_file:
-            service_output = self.jinja_env.get_template('class-service.ts')\
+            service_output = self.jinja_env.get_template('typescripts/class-service.ts')\
                 .render({'class_model': self.file.entity_declaration})
             service_file.write(service_output)
 
-        with open(parent_folder + '/'
+        with open(ts_parent_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '.model.ts', 'w+') as model_file:
-            model_output = self.jinja_env.get_template('class-model.ts')\
+            model_output = self.jinja_env.get_template('typescripts/class-model.ts')\
                 .render({'class_model': self.file.entity_declaration})
             model_file.write(model_output)
 
-        with open(parent_folder + '/'
+        with open(ts_parent_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + 's.module.ts', 'w+') as module_file:
-            pass
+            module_output = self.jinja_env.get_template('typescripts/class-module.ts') \
+                .render({'class_model': self.file.entity_declaration})
+            module_file.write(module_output)
 
         if not os.path.exists(list_folder):
             os.makedirs(list_folder)
         with open(list_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '-list.component.html', 'w+') as list_html_file:
-            list_html_output = self.jinja_env.get_template('list-class-component.html')\
+            list_html_output = self.jinja_env.get_template('typescripts/list-class-component.html')\
                 .render({'class_model': self.file.entity_declaration})
             list_html_file.write(list_html_output)
 
         with open(list_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '-list.component.ts', 'w+') as list_ts_file:
-            list_ts_output = self.jinja_env.get_template('list-class-component.ts') \
+            list_ts_output = self.jinja_env.get_template('typescripts/list-class-component.ts') \
                 .render({'class_model': self.file.entity_declaration})
             list_ts_file.write(list_ts_output)
 
@@ -101,16 +100,56 @@ class MainApp(QMainWindow):
         with open(form_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '-form.component.html', 'w+') as form_html_file:
-            form_html_output = self.jinja_env.get_template('form-class-component.html')\
+            form_html_output = self.jinja_env.get_template('typescripts/form-class-component.html')\
                 .render({'class_model': self.file.entity_declaration})
             form_html_file.write(form_html_output)
 
         with open(form_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
                   + '-form.component.ts', 'w+') as form_ts_file:
-            form_ts_output = self.jinja_env.get_template('form-class-component.ts')\
+            form_ts_output = self.jinja_env.get_template('typescripts/form-class-component.ts')\
                 .render({'class_model': self.file.entity_declaration})
             form_ts_file.write(form_ts_output)
+
+    def export_kt_files(self, folder_path):
+        ts_parent_folder = str(folder_path) + 'kotlin/' \
+                           + self.file.entity_declaration.name.get_kebab() + 's'
+        controller_folder = ts_parent_folder + '/controller'
+        if not os.path.exists(controller_folder):
+            os.makedirs(controller_folder)
+        with open(controller_folder + '/'
+                  + self.file.entity_declaration.name.get_capitalized_camel()
+                  + 'Controller.kt', 'w+') as controller_kt_file:
+            controller_kt_output = self.jinja_env.get_template('\kotlin\controller.kt') \
+                .render({'class_model': self.file.entity_declaration})
+            controller_kt_file.write(controller_kt_output)
+
+        dao_folder = ts_parent_folder + '/dao'
+        if not os.path.exists(dao_folder):
+            os.makedirs(dao_folder)
+        with open(dao_folder + '/'
+                  + self.file.entity_declaration.name.get_capitalized_camel()
+                  + 'Dao.kt', 'w+') as dao_kt_file:
+            dao_kt_output = self.jinja_env.get_template('\kotlin\dao.kt') \
+                .render({'class_model': self.file.entity_declaration})
+            dao_kt_file.write(dao_kt_output)
+
+        service_folder = ts_parent_folder + '/service'
+        if not os.path.exists(service_folder):
+            os.makedirs(service_folder)
+        with open(service_folder + '/'
+                  + self.file.entity_declaration.name.get_capitalized_camel()
+                  + 'Service.kt', 'w+') as service_kt_file:
+            service_kt_output = self.jinja_env.get_template('\kotlin\service.kt') \
+                .render({'class_model': self.file.entity_declaration})
+            service_kt_file.write(service_kt_output)
+
+    def export_file(self):
+        if self.file is None:
+            return
+        folder = QFileDialog.getExistingDirectory(self, 'Select Destination Folder')
+        self.export_ts_files(folder)
+        self.export_kt_files(folder)
         self.statusBar().showMessage('All files are exported.')
 
     def open_file(self):

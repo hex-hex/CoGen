@@ -8,7 +8,7 @@ class EntityFile:
     def __init__(self, file_path):
         self.path = file_path
         self.lines = []
-        self.package_name = ''
+        self.package_name = []
         self.import_list = []
         self.entity_declaration = EntityDeclaration()
 
@@ -112,7 +112,7 @@ class EntityFile:
                     self.entity_declaration.entity_type = DeclareType.CLASS
                     self.entity_declaration.name, self.entity_declaration.return_type = EntityFile.parse_name_type(tup)
                 elif tup[0] == DeclareType.PACKAGE:
-                    self.package_name = tup[1]
+                    self.package_name = tup[1].split('.')
 
     @staticmethod
     def parse_name_type(line_tuple):
