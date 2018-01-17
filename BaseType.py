@@ -54,14 +54,14 @@ class EntityDeclaration(BaseDeclaration):
     @property
     def typescript_type(self):
         type_map = {
-            'Int?': 'Number',
-            'Int': 'Number',
-            'Long?': 'Number',
-            'Long': 'Number',
-            'Double?': 'Number',
-            'Double': 'Number',
-            'String': 'String',
-            'String?': 'String',
+            'Int?': 'number',
+            'Int': 'number',
+            'Long?': 'number',
+            'Long': 'number',
+            'Double?': 'number',
+            'Double': 'number',
+            'String': 'string',
+            'String?': 'string',
         }
         try:
             result = type_map[self.return_type]
