@@ -117,7 +117,7 @@ class EntityFile:
                     self.entity_declaration.name, self.entity_declaration.return_type = EntityFile.parse_name_type(tup)
                 elif tup[0] == DeclareType.PACKAGE:
                     package_name = tup[1].strip()
-                    if package_name.startwith('package'):
+                    if str(package_name).startswith('package'):
                         package_name = package_name[7:]
                     self.package_name = package_name.strip().split('.')
 
