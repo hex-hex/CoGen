@@ -62,6 +62,7 @@ class EntityDeclaration(BaseDeclaration):
             'Double': 'number',
             'String': 'string',
             'String?': 'string',
+            'ZonedDateTime': 'string',
         }
         try:
             result = type_map[self.return_type]
