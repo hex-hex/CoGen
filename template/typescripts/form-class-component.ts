@@ -85,7 +85,7 @@ goBack() {
 this.location.back();
 }
 
-onSubmit({value, valid}: { value: {{class_model.name.get_capitalized_camel()}}, valid: boolean }) {
+onSubmit({value, valid}: { value: {{class_model.name.get_capitalized_camel()}}Model, valid: boolean }) {
 
 if (!this.isEdit) {
 this.{{class_model.name.get_camel()}}Service.add(value).subscribe((resp: any) => {
