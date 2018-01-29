@@ -1,5 +1,3 @@
-
-
 <!-- MAIN CONTENT -->
 <div id="content">
     <!--<div class="row">-->
@@ -45,10 +43,12 @@
 
                                 <fieldset>
                                     <div class="row">
-                                    {% for member in class_model.member_list %}
+                                        {% for member in class_model.member_list %}
+
                                         <section class="col col-6">
                                             <label class="input">
-                                            {{member.name.get_capitalized_sentence()}}<span style="color: red">*</span>
+                                                {{member.name.get_capitalized_sentence()}}
+                                                <span style="color: red">*</span>
                                                 <input type="text"
                                                        formControlName="{{member.name.get_camel()}}"
                                                        [(ngModel)]="{{class_model.name.get_camel()}}.{{member.name.get_camel()}}"
@@ -58,7 +58,7 @@
                                                         [control]="myForm.get('{{member.name.get_camel()}}')"></validation-error>
                                             </label>
                                         </section>
-                                    {% endfor %}
+                                        {% endfor %}
                                     </div>
 
                                 </fieldset>
