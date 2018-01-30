@@ -77,7 +77,7 @@ this.loading = false;
 
 equals(r1: any, r2: any) {
 if (r1 && r2) {
-return r1.id === r2.id;
+return r1.pk === r2.pk;
 }
 }
 
