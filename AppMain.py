@@ -75,7 +75,7 @@ class MainApp(QMainWindow):
 
         with open(ts_parent_folder + '/'
                   + self.file.entity_declaration.name.get_kebab()
-                  + 's.module.ts', 'w+') as module_file:
+                  + '.module.ts', 'w+') as module_file:
             module_output = self.jinja_env.get_template('typescripts/class-module.ts') \
                 .render({'class_model': self.file.entity_declaration})
             module_file.write(module_output)
