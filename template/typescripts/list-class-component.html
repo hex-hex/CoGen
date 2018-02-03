@@ -86,7 +86,7 @@
                                         {% for member in class_model.member_list %}
                                         <td>{{ '{{' }}item.{{member.name.get_camel()}} {{ '}}' }}</td>
                                     {% endfor %}
-                                        <td> <a routerLink="/pages/{{class_model.name.get_camel()}}s/edit/{{ '{{' }}item.id{{ '}}' }}"><i
+                                        <td> <a routerLink="/pages/{{class_model.name.get_camel()}}/edit/{{ '{{' }}item.id{{ '}}' }}"><i
                                                 class="fa fa-edit"></i></a></td>
                                     </tr>
                                     </tbody>
