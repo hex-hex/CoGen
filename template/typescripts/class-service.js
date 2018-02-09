@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
+var base_service_1 = require("../../services/base.service");
 var default_1 = /** @class */ (function () {
     function default_1() {
     }
@@ -20,7 +21,7 @@ var default_1 = /** @class */ (function () {
     class_model.name.get_capitalized_camel();
 }
 Service;
-BaseService;
+base_service_1.BaseService;
 implements;
 core_1.OnInit;
 {

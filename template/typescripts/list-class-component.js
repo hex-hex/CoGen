@@ -9,6 +9,14 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var base_component_1 = require("../../../theme/shared/base-component/base.component");
+var helper_service_1 = require("../../../services/helper.service");
+{
+    class_model.name.get_capitalized_camel();
+}
+Service;
+from;
+'../{{class_model.name.get_kebab()}}.service';
 var default_1 = /** @class */ (function () {
     function default_1() {
     }
@@ -24,14 +32,14 @@ var default_1 = /** @class */ (function () {
     class_model.name.get_capitalized_camel();
 }
 ListComponent;
-BaseComponent;
+base_component_1.BaseComponent;
 implements;
 core_1.OnInit;
 {
     searchForm: forms_1.FormGroup;
     searchCondition: string;
     loading: boolean;
-    constructor(private, formBuilder, forms_1.FormBuilder, private, {}, { class_model: .name.get_camel() });
+    constructor(public, formBuilder, forms_1.FormBuilder, public, {}, { class_model: .name.get_camel() });
 }
 Service: {
     {
@@ -39,10 +47,12 @@ Service: {
     }
 }
 Service,
-    private;
-helperService: HelperService;
+    public;
+router: Router,
+    public;
+helperService: helper_service_1.HelperService;
 {
-    _this = _super.call(this) || this;
+    _this = _super.call(this, router, helperService) || this;
 }
 ngOnInit();
 {

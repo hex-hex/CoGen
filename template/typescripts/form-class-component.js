@@ -13,6 +13,20 @@ var Subscription_1 = require("rxjs/Subscription");
 var router_1 = require("@angular/router");
 var ngx_auto_unsubscribe_1 = require("ngx-auto-unsubscribe");
 var common_1 = require("@angular/common");
+var base_component_1 = require("../../../theme/shared/base-component/base.component");
+{
+    class_model.name.get_capitalized_camel();
+}
+Model;
+from;
+'../{{class_model.name.get_kebab()}}.model';
+var my_notify_service_1 = require("../../../services/my-notify.service");
+{
+    class_model.name.get_capitalized_camel();
+}
+Service;
+from;
+'../{{class_model.name.get_kebab()}}.service';
 var default_1 = /** @class */ (function () {
     function default_1() {
     }
@@ -29,7 +43,7 @@ var default_1 = /** @class */ (function () {
     class_model.name.get_capitalized_camel();
 }
 FormComponent;
-BaseComponent;
+base_component_1.BaseComponent;
 implements;
 core_1.OnInit;
 {
@@ -55,9 +69,9 @@ core_1.OnInit;
     }
 }
 Model();
-constructor(public, formBuiler, forms_1.FormBuilder, public, ref, core_1.ChangeDetectorRef, public, router, router_1.Router, public, location, common_1.Location, public, myNotifyService, MyNotifyService, public, {}, { class_model: .name.get_camel() }, Service, {}, { class_model: .name.get_capitalized_camel() }, Service, public, activedRoute, ActivatedRoute);
+constructor(public, formBuiler, forms_1.FormBuilder, public, ref, core_1.ChangeDetectorRef, public, router, router_1.Router, public, location, common_1.Location, public, myNotifyService, my_notify_service_1.MyNotifyService, public, {}, { class_model: .name.get_camel() }, Service, {}, { class_model: .name.get_capitalized_camel() }, Service, public, activatedRoute, router_1.ActivatedRoute);
 {
-    _this = _super.call(this) || this;
+    _this = _super.call(this, activatedRoute, location) || this;
 }
 ngOnInit();
 {
@@ -81,7 +95,7 @@ initFormControl();
 ;
 getRouteParemeter();
 {
-    this.subscription = this.activedRoute
+    this.subscription = this.activatedRoute
         .params
         .subscribe(function (params) {
         console.log(params);
@@ -97,7 +111,7 @@ getRouteParemeter();
 }
 getQueryParams();
 {
-    this.subscription = this.activedRoute
+    this.subscription = this.activatedRoute
         .queryParams
         .subscribe(function (params) {
     });
@@ -161,7 +175,7 @@ onSubmit({ value: value, valid: valid }, { value: {} }, { class_model: .name.get
         }
         Service.update(this., {}, { class_model: .name.get_camel() });
     }
-    id, value;
+    pk, value;
     subscribe(function (resp) {
         console.log(resp);
         _this.myNotifyService.notifySuccess('The {{class_model.name.get_sentence()}} is successfully updated.');
