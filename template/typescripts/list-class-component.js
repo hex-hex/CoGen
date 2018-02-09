@@ -24,6 +24,7 @@ Service;
 }
 from;
 '../{{class_model.name.get_kebab()}}.service';
+var router_1 = require("@angular/router");
 var default_1 = /** @class */ (function () {
     function default_1() {
     }
@@ -55,7 +56,7 @@ Service: {
 }
 Service,
     public;
-router: Router,
+router: router_1.Router,
     public;
 helperService: helper_service_1.HelperService;
 {
