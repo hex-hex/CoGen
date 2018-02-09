@@ -13,20 +13,34 @@ var Subscription_1 = require("rxjs/Subscription");
 var router_1 = require("@angular/router");
 var ngx_auto_unsubscribe_1 = require("ngx-auto-unsubscribe");
 var common_1 = require("@angular/common");
-var base_component_1 = require("../../../theme/shared/base-component/base.component");
 {
-    class_model.name.get_capitalized_camel();
+    {
+        class_model.name.get_capitalized_camel();
+    }
 }
 Model;
+{
+    {
+        '}';
+    }
+}
 from;
 '../{{class_model.name.get_kebab()}}.model';
 var my_notify_service_1 = require("../../../services/my-notify.service");
 {
-    class_model.name.get_capitalized_camel();
+    {
+        class_model.name.get_capitalized_camel();
+    }
 }
 Service;
+{
+    {
+        '}';
+    }
+}
 from;
 '../{{class_model.name.get_kebab()}}.service';
+var form_base_component_1 = require("../../../theme/shared/form-base-component/form-base.component");
 var default_1 = /** @class */ (function () {
     function default_1() {
     }
@@ -43,7 +57,7 @@ var default_1 = /** @class */ (function () {
     class_model.name.get_capitalized_camel();
 }
 FormComponent;
-base_component_1.BaseComponent;
+form_base_component_1.FormBaseComponent;
 implements;
 core_1.OnInit;
 {

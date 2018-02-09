@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {BaseComponent} from '../../../theme/shared/base-component/base.component';
 import {HelperService} from '../../../services/helper.service';
-import {{{class_model.name.get_capitalized_camel()}}Service} from '../{{class_model.name.get_kebab()}}.service';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}Service{{ '}' }} from '../{{class_model.name.get_kebab()}}.service';
 
 
 @Component({

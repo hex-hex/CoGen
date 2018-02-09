@@ -10,8 +10,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {LoadingModule} from 'ngx-loading';
 import {ConfirmationPopoverModule} from 'angular-confirmation-popover';
 
-import {{{class_model.name.get_capitalized_camel()}}ListComponent} from './{{class_model.name.get_kebab()}}-list/{{class_model.name.get_kebab()}}-list.component';
-import {{{class_model.name.get_capitalized_camel()}}FormComponent} from './{{class_model.name.get_kebab()}}-form/{{class_model.name.get_kebab()}}-form.component';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}ListComponent{{ '}' }} from './{{class_model.name.get_kebab()}}-list/{{class_model.name.get_kebab()}}-list.component';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}FormComponent{{ '}' }} from './{{class_model.name.get_kebab()}}-form/{{class_model.name.get_kebab()}}-form.component';
 
 
 export const routes: Routes = [

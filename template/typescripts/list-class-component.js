@@ -12,9 +12,16 @@ var forms_1 = require("@angular/forms");
 var base_component_1 = require("../../../theme/shared/base-component/base.component");
 var helper_service_1 = require("../../../services/helper.service");
 {
-    class_model.name.get_capitalized_camel();
+    {
+        class_model.name.get_capitalized_camel();
+    }
 }
 Service;
+{
+    {
+        '}';
+    }
+}
 from;
 '../{{class_model.name.get_kebab()}}.service';
 var default_1 = /** @class */ (function () {

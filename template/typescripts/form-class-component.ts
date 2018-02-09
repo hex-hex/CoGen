@@ -4,17 +4,17 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Location} from '@angular/common';
-import {BaseComponent} from '../../../theme/shared/base-component/base.component';
-import {{{class_model.name.get_capitalized_camel()}}Model} from '../{{class_model.name.get_kebab()}}.model';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}Model{{ '}' }} from '../{{class_model.name.get_kebab()}}.model';
 import {MyNotifyService} from '../../../services/my-notify.service';
-import {{{class_model.name.get_capitalized_camel()}}Service} from '../{{class_model.name.get_kebab()}}.service';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}Service{{ '}' }} from '../{{class_model.name.get_kebab()}}.service';
+import {FormBaseComponent} from '../../../theme/shared/form-base-component/form-base.component';
 
 @Component({
 selector: 'sa-{{class_model.name.get_kebab()}}-form',
 templateUrl: './{{class_model.name.get_kebab()}}-form.component.html',
 })
 @AutoUnsubscribe()
-export class {{class_model.name.get_capitalized_camel()}}FormComponent extends BaseComponent implements OnInit {
+export class {{class_model.name.get_capitalized_camel()}}FormComponent extends FormBaseComponent implements OnInit {
 public loading: boolean;
 public myForm: FormGroup;
 public id: number;
