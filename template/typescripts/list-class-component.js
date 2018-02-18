@@ -79,8 +79,8 @@ refresh();
     }
     Service.getAllByPaging(this.searchCondition, this.paging).subscribe(function (resp) {
         console.log(resp);
-        _this.listElements = resp.content;
-        _this.paging.totalSize = resp.totalElements;
+        _this.listElements = resp.results;
+        _this.paging.totalSize = resp.count;
         _this.loading = false;
     }, function (err) {
         _this.loading = false;
