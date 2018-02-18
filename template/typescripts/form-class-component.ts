@@ -1,16 +1,20 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Location} from '@angular/common';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}Model{{ '}' }} from '../{{class_model.name.get_kebab()}}.model';
+import {MyNotifyService} from '../../../services/my-notify.service';
+import {{ '{' }}{{class_model.name.get_capitalized_camel()}}Service{{ '}' }} from '../{{class_model.name.get_kebab()}}.service';
+import {FormBaseComponent} from '../../../theme/shared/form-base-component/form-base.component';
 
 @Component({
 selector: 'sa-{{class_model.name.get_kebab()}}-form',
 templateUrl: './{{class_model.name.get_kebab()}}-form.component.html',
 })
 @AutoUnsubscribe()
-export class {{class_model.name.get_capitalized_camel()}}FormComponent extends BaseComponent implements OnInit {
+export class {{class_model.name.get_capitalized_camel()}}FormComponent extends FormBaseComponent implements OnInit {
 public loading: boolean;
 public myForm: FormGroup;
 public id: number;
@@ -24,8 +28,8 @@ public router: Router,
 public location: Location,
 public myNotifyService: MyNotifyService,
 public {{class_model.name.get_camel()}}Service: {{class_model.name.get_capitalized_camel()}}Service,
-public activedRoute: ActivatedRoute) {
-super();
+public activatedRoute: ActivatedRoute) {
+super(activatedRoute, location);
 }
 
 ngOnInit() {
@@ -43,7 +47,7 @@ initFormControl() {
 }
 
 getRouteParemeter() {
-    this.subscription = this.activedRoute
+    this.subscription = this.activatedRoute
     .params
     .subscribe(params => {
     console.log(params);
@@ -58,7 +62,7 @@ getRouteParemeter() {
 }
 
 getQueryParams() {
-this.subscription = this.activedRoute
+this.subscription = this.activatedRoute
 .queryParams
 .subscribe(params => {
 });
@@ -77,7 +81,7 @@ this.loading = false;
 
 equals(r1: any, r2: any) {
 if (r1 && r2) {
-return r1.id === r2.id;
+return r1.pk === r2.pk;
 }
 }
 
@@ -85,7 +89,7 @@ goBack() {
 this.location.back();
 }
 
-onSubmit({value, valid}: { value: {{class_model.name.get_capitalized_camel()}}, valid: boolean }) {
+onSubmit({value, valid}: { value: {{class_model.name.get_capitalized_camel()}}Model, valid: boolean }) {
 
 if (!this.isEdit) {
 this.{{class_model.name.get_camel()}}Service.add(value).subscribe((resp: any) => {
@@ -96,7 +100,7 @@ console.log(err);
 this.myNotifyService.notifyFail(err.error.error);
 })
 } else {
-this.{{class_model.name.get_camel()}}Service.update(this.{{class_model.name.get_camel()}}.id, value).subscribe((resp: any) => {
+this.{{class_model.name.get_camel()}}Service.update(this.{{class_model.name.get_camel()}}.pk, value).subscribe((resp: any) => {
 console.log(resp);
 this.myNotifyService.notifySuccess('The {{class_model.name.get_sentence()}} is successfully updated.');
 this.goBack();

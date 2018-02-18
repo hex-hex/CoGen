@@ -17,6 +17,32 @@ var shared_module_1 = require("../../theme/shared/shared.module");
 var ngx_pagination_1 = require("ngx-pagination");
 var ngx_loading_1 = require("ngx-loading");
 var angular_confirmation_popover_1 = require("angular-confirmation-popover");
+{
+    {
+        class_model.name.get_capitalized_camel();
+    }
+}
+ListComponent;
+{
+    {
+        '}';
+    }
+}
+from;
+'./{{class_model.name.get_kebab()}}-list/{{class_model.name.get_kebab()}}-list.component';
+{
+    {
+        class_model.name.get_capitalized_camel();
+    }
+}
+FormComponent;
+{
+    {
+        '}';
+    }
+}
+from;
+'./{{class_model.name.get_kebab()}}-form/{{class_model.name.get_kebab()}}-form.component';
 exports.routes = [
     { path: '', redirectTo: 'list', pathMatch: 'full' },
     { path: 'list', component: {} }, { class_model: .name.get_capitalized_camel() }
