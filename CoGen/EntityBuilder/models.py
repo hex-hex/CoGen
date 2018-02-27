@@ -18,7 +18,7 @@ class Entity(models.Model):
 class BaseField(models.Model):
     is_null = models.BooleanField(default=True)
     is_blank = models.BooleanField(default=True)
-    field_name = models.CharField(max_length=255, null=True, blank=True)
+    field_name = models.CharField(max_length=255)
     
     class Meta:
         abstract = True
@@ -32,11 +32,11 @@ class StringField(BaseField):
 
 
 class ManyToManyField(BaseField):
-    link_entity = models.ForeignKey('Entity', null=True, blank=True, on_delete=models.CASCADE)
+    link_entity = models.ForeignKey('Entity', on_delete=models.CASCADE)
 
 
 class ForeignKey(BaseField):
-    link_entity = models.ForeignKey('Entity', null=True, blank=True, on_delete=models.CASCADE)
+    link_entity = models.ForeignKey('Entity', on_delete=models.CASCADE)
     
     
 class IntField(BaseField):
@@ -57,3 +57,8 @@ class DateTimeField(BaseField):
 
 class EnumField(BaseField):
     default_value = models.IntegerField(default=0)
+
+
+class EnumOption(models.Model):
+    option_name = models.CharField(max_length=32, default='')
+    enum_field = models.ForeignKey('EnumField', on_delete=models.CASCADE)
