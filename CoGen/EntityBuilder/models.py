@@ -11,6 +11,9 @@ class Entity(models.Model):
     many_to_many_fields = models.ManyToManyField('ManyToManyField', blank=True)
     foreign_keys = models.ManyToManyField('ForeignKey', blank=True)
 
+    def __str__(self):
+        return self.entity_name
+
 
 class BaseField(models.Model):
     is_null = models.BooleanField(default=True)
@@ -20,21 +23,32 @@ class BaseField(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.field_name
+
 
 class StringField(BaseField):
     max_length = models.PositiveIntegerField(default=255)
 
 
 class ManyToManyField(BaseField):
-    entity_name = models.CharField(max_length=255, null=True, blank=True)
+    link_entity = models.ForeignKey('Entity', null=True, blank=True, on_delete=models.CASCADE)
 
 
 class ForeignKey(BaseField):
-    entity_name = models.CharField(max_length=255, null=True, blank=True)
+    link_entity = models.ForeignKey('Entity', null=True, blank=True, on_delete=models.CASCADE)
     
     
 class IntField(BaseField):
     default_value = models.IntegerField(default=0)
+
+
+class FloatField(BaseField):
+    default_value = models.FloatField(default=0)
+
+
+class BooleanField(BaseField):
+    default_value = models.BooleanField(default=False)
 
 
 class DateTimeField(BaseField):
